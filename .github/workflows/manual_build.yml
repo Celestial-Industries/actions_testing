@@ -72,7 +72,15 @@ jobs:
       id: task-def-image
       run: |
         aws ecs describe-task-definition --task-definition simple-midge-dev --query taskDefinition > ./task-definition.json
+        cat ./task-definition.json
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$(git rev-parse --short=8 ${{ github.sha }})
+        echo $image
+        echo ${{ steps.task-def-image.outputs.image }}
+
+    - name: Sleep for 5 seconds
+      uses: jakejarvis/wait-action@master
+      with:
+        time: '5s'
 
     - name: Render AWS task
       id: render-ecs-task
@@ -134,7 +142,7 @@ jobs:
 #        #custom-policy-path: frontend/anchore_policy.json
 #        debug: false
 
-## need to check sytax below 
+## need to check sytax below
 #  scan:
 #    runs-on: ubuntu-latest
 #  notification2:
