@@ -85,7 +85,6 @@ jobs:
         echo 'short hash to be used in tag will be:' ${GIT_HASH}
         aws ecs describe-task-definition --task-definition simple-midge-dev --query taskDefinition > ./task-definition.json
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GIT_HASH}"
-        949207431024.dkr.ecr.ca-central-1.amazonaws.com/28f124
         echo $image
         echo ${{ steps.task-def-image.outputs.image }}
 
