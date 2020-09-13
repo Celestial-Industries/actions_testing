@@ -80,7 +80,7 @@ jobs:
         ECR_REPOSITORY: dev-testing
       id: task-def-image
       run: |
-        aws ecs describe-task-definition --task-definition simple-midge-dev --query taskDefinition > ./task-definition.json
+        aws ecs describe-task-definition --task-definition modern-badger-dev --query taskDefinition > ./task-definition.json
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$(git rev-parse --short=8 ${{ github.sha }})"
 
 #    - name: Sleep for 5 seconds
@@ -101,8 +101,8 @@ jobs:
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.render-ecs-task.outputs.task-definition }}
-        service: simple-midge
-        cluster: simple-midge-dev
+        service: modern-badger
+        cluster: modern-badger-dev
         wait-for-service-stability: true
 
     - name: Deploy failed
