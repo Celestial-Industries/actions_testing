@@ -36,7 +36,7 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY
 
     - name: Build failed
-      if: ${{ failure() }}
+      if: ${{ failure() }} || ${{ cancelled() }}
       uses: kpritam/slack-job-status-action@v1
       with:
         job-status: ${{ job.status }}
@@ -106,8 +106,7 @@ jobs:
         wait-for-service-stability: true
 
     - name: Deploy failed
-      if: ${{ failure() }}
-      if: ${{ cancelled() }}
+      if: ${{ failure() }} || ${{ cancelled() }}
       uses: kpritam/slack-job-status-action@v1
       with:
         job-status: ${{ job.status }}
