@@ -31,9 +31,9 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: dev-testing
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_TAG: $(git rev-parse --short=8 ${{ github.sha }})
       run: |
-        docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$(git rev-parse --short=8 ${{ github.sha }}) -t $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        docker build . -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest
         docker push $ECR_REGISTRY/$ECR_REPOSITORY
 
     - name: Build failed
@@ -51,7 +51,6 @@ jobs:
         job-status: ${{ job.status }}
         slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
         channel: githubactions_notifications
-
 
   deploy:
     needs: build
@@ -80,18 +79,16 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         ECR_REPOSITORY: dev-testing
+        IMAGE_TAG: $(git rev-parse --short=8 ${{ github.sha }})
       id: task-def-image
       run: |
-        echo 'short hash to be used in tag will be:' ${GIT_HASH}
         aws ecs describe-task-definition --task-definition simple-midge-dev --query taskDefinition > ./task-definition.json
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GIT_HASH}"
-        echo $image
-        echo ${{ steps.task-def-image.outputs.image }}
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
-    - name: Sleep for 5 seconds
-      uses: jakejarvis/wait-action@master
-      with:
-        time: '5s'
+#    - name: Sleep for 5 seconds
+#      uses: jakejarvis/wait-action@master
+#      with:
+#        time: '5s'
 
     - name: Render AWS task
       id: render-ecs-task
