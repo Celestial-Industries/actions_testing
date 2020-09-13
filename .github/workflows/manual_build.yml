@@ -68,12 +68,18 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Set git hash env var
+      id: git-hash
+      run: |
+        echo "::set-env name=GIT_HASH::$(git rev-parse --short=6 ${{ github.sha }})"
+
     - name: Setup task definition and set container image
       id: task-def-image
       run: |
+        echo 'short hash to be used in tag will be:' ${GIT_HASH}
         aws ecs describe-task-definition --task-definition simple-midge-dev --query taskDefinition > ./task-definition.json
-        cat ./task-definition.json
-        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$(git rev-parse --short=8 ${{ github.sha }})
+#        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GIT_HASH}
+        echo "::set-output name=image::949207431024.dkr.ecr.ca-central-1.amazonaws.com/${GIT_HASH}
         echo $image
         echo ${{ steps.task-def-image.outputs.image }}
 
