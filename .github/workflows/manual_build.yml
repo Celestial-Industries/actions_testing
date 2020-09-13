@@ -78,13 +78,11 @@ jobs:
 
     - name: Setup task definition and set container image
       id: task-def-image
-      #        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GIT_HASH}
+
       run: |
         echo 'short hash to be used in tag will be:' ${GIT_HASH}
         aws ecs describe-task-definition --task-definition simple-midge-dev --query taskDefinition > ./task-definition.json
-        echo "::set-output name=image::949207431024.dkr.ecr.ca-central-1.amazonaws.com/${GIT_HASH}"
-        echo $image
-        echo ${{ steps.task-def-image.outputs.image }}
+        echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GIT_HASH}"
 
     - name: Sleep for 5 seconds
       uses: jakejarvis/wait-action@master
