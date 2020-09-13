@@ -74,15 +74,20 @@ jobs:
     - name: Set git hash env var
       id: git-hash
       run: |
-        echo "::set-env name=GIT_HASH::$(git rev-parse --short=6 ${{ github.sha }})"
+        echo "::set-env name=GIT_HASH::$(git rev-parse --short=8 ${{ github.sha }})"
 
     - name: Setup task definition and set container image
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        ECR_REPOSITORY: dev-testing
       id: task-def-image
-
       run: |
         echo 'short hash to be used in tag will be:' ${GIT_HASH}
         aws ecs describe-task-definition --task-definition simple-midge-dev --query taskDefinition > ./task-definition.json
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:${GIT_HASH}"
+        949207431024.dkr.ecr.ca-central-1.amazonaws.com/28f124
+        echo $image
+        echo ${{ steps.task-def-image.outputs.image }}
 
     - name: Sleep for 5 seconds
       uses: jakejarvis/wait-action@master
