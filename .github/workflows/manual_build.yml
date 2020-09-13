@@ -68,6 +68,9 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
 
+    - name: Checkout repo
+      uses: actions/checkout@v2
+
     - name: Set git hash env var
       id: git-hash
       run: |
