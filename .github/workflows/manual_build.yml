@@ -25,6 +25,7 @@ jobs:
 
   notification2:
     runs-on: ubuntu-latest
+    steps:
       - name: message1
         id: message1
         #if: ${{ failure() }}
@@ -38,6 +39,7 @@ jobs:
 
   notification3:
     runs-on: ubuntu-latest
+    steps:
       - name: Message2
         id: message2
         uses: rtCamp/action-slack-notify@master
@@ -50,7 +52,6 @@ jobs:
           SLACK_USERNAME: something
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
 
-y
 #  failure-notification:
 #    runs-on: ubuntu-latest
 #    steps:
