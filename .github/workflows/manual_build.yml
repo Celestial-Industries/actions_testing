@@ -4,16 +4,20 @@ name: Manual workflow
 # or API.
 on:
   workflow_dispatch:
+    branches:
+      - master
+    tags:
+      - '*'
     inputs:
       name:
         description: 'Deploy Application'
         default: 'World'
         required: false
-  push:
-    branches:
-      - master
-    tags:
-      - '*'
+#  push:
+#    branches:
+#      - master
+#    tags:
+#      - '*'
 
 
 jobs:
