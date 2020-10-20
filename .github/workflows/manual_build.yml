@@ -33,26 +33,26 @@ jobs:
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
 
-  slackNotification:
-    name: Slack Notification
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Slack Notification
-      uses: kv109/action-ready-for-review@0.1
-      env:
-        IGNORE_DRAFTS: true # Ignore draft pull requests. Default: true.
-        PR_APPROVED_FORMAT: | # Format is fully customizable.
-          *{ pull_request.title }* was approved by { review.user.login } :heavy_check_mark:
-        PR_READY_FOR_REVIEW_FORMAT: |
-          New PR! :smile:
-          Title: *{ pull_request.title }*
-          Author: { pull_request.user.login }
-          URL: { pull_request.html_url }
-        PR_REJECTED_FORMAT: |
-          *{ pull_request.title }* was rejected by { review.user.login } :cry:
-        SLACK_CHANNEL: githubactions_notifications
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}   
+#  slackNotification:
+#    name: Slack Notification
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v2
+#    - name: Slack Notification
+#      uses: kv109/action-ready-for-review@0.1
+#      env:
+#        IGNORE_DRAFTS: true # Ignore draft pull requests. Default: true.
+#        PR_APPROVED_FORMAT: | # Format is fully customizable.
+#          *{ pull_request.title }* was approved by { review.user.login } :heavy_check_mark:
+#        PR_READY_FOR_REVIEW_FORMAT: |
+#          New PR! :smile:
+#          Title: *{ pull_request.title }*
+#          Author: { pull_request.user.login }
+#          URL: { pull_request.html_url }
+#        PR_REJECTED_FORMAT: |
+#          *{ pull_request.title }* was rejected by { review.user.login } :cry:
+#        SLACK_CHANNEL: githubactions_notifications
+#        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}   
 
   pr-reminder:
     runs-on: ubuntu-latest
@@ -65,24 +65,24 @@ jobs:
           slack-conversation-id: githubactions_notifications
 
 
-  pr-monitor-job:
-    runs-on: ubuntu-latest
-    name: PR monitor
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Scan for PRs
-        id: scan
-        uses: andrewandante/pr-monitor-slack-action@v1.0.0
-        with:
-          # required inputs
-          slack-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          # optional inputs (with defaults set)
-          channel: '#githubactions_notifications'
-          sort: 'updated'
-          sort-direction: 'desc'
-          approved-emoji: 'heavy_check_mark'
-          pending-emoji: 'heavy_minus_sign'
-          changes-requested-emoji: 'x'
-          requested-reviewer-emoji: 'heavy_minus_sign'
+#  pr-monitor-job:
+#    runs-on: ubuntu-latest
+#    name: PR monitor
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v2
+#      - name: Scan for PRs
+#        id: scan
+#        uses: andrewandante/pr-monitor-slack-action@v1.0.0
+#        with:
+#          # required inputs
+#          slack-token: ${{ secrets.SLACK_BOT_TOKEN }}
+#          github-token: ${{ secrets.GITHUB_TOKEN }}
+#          # optional inputs (with defaults set)
+#          channel: '#githubactions_notifications'
+#          sort: 'updated'
+#          sort-direction: 'desc'
+#          approved-emoji: 'heavy_check_mark'
+#          pending-emoji: 'heavy_minus_sign'
+#          changes-requested-emoji: 'x'
+#          requested-reviewer-emoji: 'heavy_minus_sign'
