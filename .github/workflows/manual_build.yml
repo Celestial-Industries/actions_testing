@@ -20,15 +20,39 @@ on:
 #      - master
 #    tags:
 #      - '*'
-
+##  pull_request:
+##    types: [opened, ready_for_review]
+##  pull_request_review:
+##    types: [submitted]
 
 jobs:
-  greet:
+  notifications:
     runs-on: ubuntu-latest
 
     steps:
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
+
+  slackNotification:
+    name: Slack Notification
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Slack Notification
+      uses: kv109/action-ready-for-review@0.1
+      env:
+        IGNORE_DRAFTS: true # Ignore draft pull requests. Default: true.
+        PR_APPROVED_FORMAT: | # Format is fully customizable.
+          *{ pull_request.title }* was approved by { review.user.login } :heavy_check_mark:
+        PR_READY_FOR_REVIEW_FORMAT: |
+          New PR! :smile:
+          Title: *{ pull_request.title }*
+          Author: { pull_request.user.login }
+          URL: { pull_request.html_url }
+        PR_REJECTED_FORMAT: |
+          *{ pull_request.title }* was rejected by { review.user.login } :cry:
+        SLACK_CHANNEL: githubactions_notifications
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}   
 
   pr-reminder:
     runs-on: ubuntu-latest
