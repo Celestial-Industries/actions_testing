@@ -4,7 +4,7 @@ name: One Stop Shop
 # or API.
 on:
   schedule:
-    - cron: "0 9 * 1-5 *"
+    - cron: "0 10 * * 1-5"
   workflow_dispatch:
     branches:
       - dev
