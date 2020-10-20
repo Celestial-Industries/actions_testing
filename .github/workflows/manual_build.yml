@@ -1,8 +1,10 @@
-name: Manual workflow
+name: One Stop Shop
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
+  schedule:
+    - cron: "0 9 * 1-5 *"
   workflow_dispatch:
     branches:
       - dev
@@ -27,3 +29,13 @@ jobs:
     steps:
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
+
+  pr-reminder:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get PR list
+        uses: leopic/gh-action-open-pr-notifier@v1.0.0
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          slackbot-token: ${{ secrets.YOUR_SLACKBOT_TOKEN }}
+          slack-conversation-id: githubactions_notifications
