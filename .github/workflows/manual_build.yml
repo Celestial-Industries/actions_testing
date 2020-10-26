@@ -3,11 +3,9 @@ name: One Stop Shop
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-  schedule:
-    - cron: "0 10 * * 1-5"
   workflow_dispatch:
     branches:
-      - dev
+      - "*"
     tags:
       - '*'
     inputs:
@@ -33,6 +31,18 @@ jobs:
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
 
+  pr-reviews-reminder:
+    name: PR_beaver
+    runs-on: ubuntu-latest
+    steps:
+    -  uses: nicklemmon/review-badger@v0.0.19-alpha
+       env:
+        GITHUB_API_TOKEN: ${{ secrets.GITHUB_API_TOKEN }}
+        GITHUB_REPO: ${{ secrets.GITHUB_REPOSITORY }}
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+       with:
+        slackChannel: '#githubactions_notifications'
+        
 #  slackNotification:
 #    name: Slack Notification
 #    runs-on: ubuntu-latest
