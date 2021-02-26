@@ -1,12 +1,11 @@
-name: Frontend Build
+name: Backend Pipeline
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-  workflow_run:
-    workflows: ["Frontend Pipeline", "Backend Pipeline"]
-    types:
-      - completed
+  push:
+    branches:
+      - master
     inputs:
       name:
         description: 'Deploy Application'
@@ -26,3 +25,6 @@ jobs:
     steps:
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
+
+    - name: sleep
+      run: sleep 20
