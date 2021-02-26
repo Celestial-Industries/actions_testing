@@ -18,10 +18,13 @@ on:
 #      - master
 #    tags:
 #      - '*'
-
+##  pull_request:
+##    types: [opened, ready_for_review]
+##  pull_request_review:
+##    types: [submitted]
 
 jobs:
-  greet:
+  notifications:
     runs-on: ubuntu-latest
 
     steps:
