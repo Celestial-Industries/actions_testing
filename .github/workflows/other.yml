@@ -4,7 +4,7 @@ name: End 2 End
 # or API.
 on:
   workflow_run:
-    workflows: ["Frontend Pipeline" && "Backend Pipeline"]
+    workflows: ["Frontend Pipeline" || "Backend Pipeline"]
     types:
       - completed
     inputs:
