@@ -1,13 +1,12 @@
-name: One Stop Shop
+name: Frontend Build
 
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
-  push:
-    branches:
-      - master
+  workflow_run:
+    workflows: ["One Stop Shop"]
+    types:
+      - completed
     inputs:
       name:
         description: 'Deploy Application'
@@ -27,6 +26,3 @@ jobs:
     steps:
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
-
-    - name: sleep 30
-      run: sleep 30
