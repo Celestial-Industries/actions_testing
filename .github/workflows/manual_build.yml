@@ -1,9 +1,6 @@
 name: One Stop Shop
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     types: [opened, ready_for_review]
   pull_request_review:
