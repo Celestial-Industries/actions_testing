@@ -26,3 +26,6 @@ jobs:
     steps:
     - name: Send greeting
       run: echo "Hello ${{ github.event.inputs.name }}"
+
+    - name: blahhhhh
+      run: echo blaaaaaahhhh
