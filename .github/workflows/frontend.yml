@@ -31,4 +31,4 @@ jobs:
       run: sleep 10
 
     - name: more
-      run: echo "more stuff"
+      run: exit 1
