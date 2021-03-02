@@ -6,7 +6,7 @@ on:
   push:
     branches:
       - master
-      - '*'
+      - feature/workflow_run
     inputs:
       name:
         description: 'Deploy Application'
