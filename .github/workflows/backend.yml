@@ -6,6 +6,7 @@ on:
   push:
     branches:
       - master
+      - feature/workflow_run
     inputs:
       name:
         description: 'Deploy Application'
@@ -19,7 +20,7 @@ on:
 
 
 jobs:
-  greet:
+  frontend:
     runs-on: ubuntu-latest
 
     steps:
