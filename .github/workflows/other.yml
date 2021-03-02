@@ -3,10 +3,10 @@ name: End 2 End
 # Controls when the action will run. Workflow runs when manually triggered using the UI
 # or API.
 on:
-#  workflow_run:
-#    workflows: ["Frontend Pipeline", "Backend Pipeline"]
-#    types:
-#      - completed
+  workflow_run:
+    workflows: ["Frontend Pipeline", "Backend Pipeline"]
+    types:
+      - completed
     inputs:
       name:
         description: 'Deploy Application'
