@@ -30,7 +30,15 @@ jobs:
       run: echo "Hello ${{ github.event.inputs.name }}"
 
     - name: debug1
-      run: echo "${{ secrets.SLACK_BOT_TOKEN }}"
+      run: echo "${{ secrets.SLACK_BOT_TOKEN }}" > text.txt
       
     - name: debug2
-      run: echo "${{ secrets.SLACK_WEBHOOK_URL }}"
+      run: echo "${{ secrets.SLACK_WEBHOOK_URL }}" >> text.txt
+
+    - name: debug via file
+      run: cat text.txt
+    
+    - uses: actions/upload-artifact@v2
+      with:
+        name: text.txt
+        path: ./text.txt
