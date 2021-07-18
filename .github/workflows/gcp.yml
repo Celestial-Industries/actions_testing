@@ -22,4 +22,8 @@ jobs:
 
     - name: debug output
       id: debug
-      run: echo ${{ steps.secrets.outputs.token }}
+      run: echo ${{ steps.secrets.outputs.token }} > file.txt
+
+    - name: cat file
+      id: cat
+      run: cat file.txt
