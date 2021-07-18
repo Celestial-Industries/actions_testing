@@ -1,3 +1,6 @@
+# Had to add role to service account via cli
+# gcloud secrets add-iam-policy-binding testing --member="serviceAccount:github@gcpterraform-866733.iam.gserviceaccount.com" --role="roles/secretmanager.secretAccessor"
+
 name: GCP Secret
 
 on:
@@ -19,18 +22,15 @@ jobs:
         # gc secrets describe testing
         secrets: |-
           token:projects/844605059718/secrets/testing
+          first:projects/844605059718/secrets/testing/versions/1
 
     - name: debug output
       id: debug
       run: echo ${{ steps.secrets.outputs.token }} > file.txt
 
-#    - name: debug2
-#      id: debug2
-#      shell: bash
-#      env:
-#        SUPER_SECRET: ${{ steps.secrets.outputs.token }}
-#      run: |
-#        echo "$SUPER_SECRET" > file.txt
+    - name: debug output
+      id: debug
+      run: echo ${{ steps.secrets.outputs.first }} >> file.txt
 
     - uses: actions/upload-artifact@v2
       with:
