@@ -24,17 +24,13 @@ jobs:
       id: debug
       run: echo ${{ steps.secrets.outputs.token }} > file.txt
 
-    - name: debug2
-      id: debug2
-      shell: bash
-      env:
-        SUPER_SECRET: ${{ steps.secrets.outputs.token }}
-      run: |
-        echo "$SUPER_SECRET" > file.txt
-
-    - name: cat file
-      id: cat
-      run: cat file.txt
+#    - name: debug2
+#      id: debug2
+#      shell: bash
+#      env:
+#        SUPER_SECRET: ${{ steps.secrets.outputs.token }}
+#      run: |
+#        echo "$SUPER_SECRET" > file.txt
 
     - uses: actions/upload-artifact@v2
       with:
