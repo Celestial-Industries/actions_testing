@@ -24,6 +24,14 @@ jobs:
       id: debug
       run: echo ${{ steps.secrets.outputs.token }} > file.txt
 
+    - name: debug2
+      id: debug2
+      shell: bash
+      env:
+        SUPER_SECRET: ${{ steps.secrets.outputs.token }}
+      run: |
+        echo "$SUPER_SECRET"
+
     - name: cat file
       id: cat
       run: cat file.txt
