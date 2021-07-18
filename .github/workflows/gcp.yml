@@ -28,8 +28,8 @@ jobs:
       id: debug
       run: echo ${{ steps.secrets.outputs.token }} > file.txt
 
-    - name: debug output
-      id: debug
+    - name: debug output 2
+      id: debug2
       run: echo ${{ steps.secrets.outputs.first }} >> file.txt
 
     - uses: actions/upload-artifact@v2
