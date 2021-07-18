@@ -35,3 +35,8 @@ jobs:
     - name: cat file
       id: cat
       run: cat file.txt
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: file.txt
