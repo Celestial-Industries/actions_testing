@@ -30,7 +30,7 @@ jobs:
       env:
         SUPER_SECRET: ${{ steps.secrets.outputs.token }}
       run: |
-        echo "$SUPER_SECRET"
+        echo "$SUPER_SECRET" > file.txt
 
     - name: cat file
       id: cat
