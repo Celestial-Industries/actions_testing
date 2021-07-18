@@ -1,7 +1,5 @@
-name: Frontend Pipeline
+name: GCP Secret
 
-# Controls when the action will run. Workflow runs when manually triggered using the UI
-# or API.
 on:
   push:
     branches:
@@ -10,10 +8,10 @@ on:
 jobs:
   secret:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Send greeting
-      run: echo "Hello ${{ github.event.inputs.name }}"
+    - name: debug output
+      id: debug2
+      run: echo ${{ secrets.GCP_SECRET_READER }}
 
       # https://github.com/google-github-actions/get-secretmanager-secrets
     - name: Get secret
